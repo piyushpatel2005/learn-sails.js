@@ -49,12 +49,14 @@
       <!-- SUBMIT NEW VIDEO -->
       <section class="submit-video-form col-md-4">
         <h3>See something missing?</h3>
-        <form>
+        <form ng-submit="submitNewVideo()">
           <input class="form-control" type="text" name="title" placeholder="e.g.
-          My video title"/>
+          My video title" ng-model="newVideoTitle"/>
           <input class="form-control" type="text" name="src"
-          placeholder="e.g. https://www.youtube.com/watch?v=5O434MiRBoY"/>
-          <button class="btn btn-success" >Submit Video</button>
+          placeholder="e.g. https://www.youtube.com/watch?v=5O434MiRBoY" ng-model="newVideoSrc"/>
+          <button class="btn btn-success" type="submit" ng-disabled="busySubmittingVideo">
+            {{busySubmittingVideo? 'Submitting...': 'Submit Video'}}
+          </button>
         </form>
       </section>
       <!-- LIST OF VIDEOS -->
