@@ -24,3 +24,14 @@ The default home page is configured at generated application `/config/routes.js 
 
 The views are available in `views` directory.
 
+Convert root route to `index.html`. You can use `sails-generate-static` to convert `homepage.ejs` to `index.html`.
+
+Use: `npm install sails-generate-static --save`
+
+Then, run `sails generate static`. This automatically removes explicit route in `config/routes.js` and copies most of the content to `assets/index.html`. Now, `assets` directory works as static file resource. So, sails will look for route for '/' and when it doesn't find one, it will go to `assets` and serve the `index.html` file.
+
+Sails uses Grunt to build files and copies all the assets to `.tmp/public` directory. So, it serves these files ultimately. You can read more about [assets pipelining](https://sailsjs.com/documentation/concepts/assets/default-tasks#?overview).
+
+We can also change the configuration for automatically adding CSS and JS files from Grunt task configuration in `tasks/pipeline.js` file.
+
+
