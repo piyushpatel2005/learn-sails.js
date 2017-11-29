@@ -34,4 +34,4 @@ Sails uses Grunt to build files and copies all the assets to `.tmp/public` direc
 
 We can also change the configuration for automatically adding CSS and JS files from Grunt task configuration in `tasks/pipeline.js` file.
 
-
+Sails-linter automatically adds css files from `assets/styles` into html files. This happens automatically. It loads them inside <!--STYLES --> comment. It does similar automatic linking for JS files. These files are imported based on their name.
