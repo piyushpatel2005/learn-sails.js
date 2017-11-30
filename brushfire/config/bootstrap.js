@@ -23,8 +23,36 @@ module.exports.bootstrap = function(cb) {
       return cb();
     }
 
-    console.log('There are no videos.');
-    return cb();
+    var Youtube = require('machinepack-youtube');
+    var env = require('./local.js');
+
+    Youtube.searchVideos({
+      query: 'grumpy cat',
+      apiKey: env.google.apiKey,
+      limit: 15
+    }).exec({
+      error: function (err) {
+        console.log('An error: ', err);
+        return cb(err);
+      },
+      success: function(result) {
+        // got the results then map it to our data model.
+        _.each(result, function(video) {
+          video.src = 'https://www.youtube.com/embed/' + video.id;
+          delete video.description;
+          delete video.publishedAt;
+          delete video.id;
+          delete video.url;
+        });
+
+        Video.create(result).exec(function(err, videoCreated) {
+          if(err) {
+            return cb(err);
+          }
+          console.log(videoCreated);
+          return cb();
+        });
+      }
+    });
   });
-  // cb();
 };

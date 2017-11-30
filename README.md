@@ -74,3 +74,5 @@ You can use `config/bootstrap.js` to bootstrap the code on the first run. For ex
 1. Loads models and adapters
 2. Run bootstrap.js file.
 3. continue lifting sails
+
+We can use configuration variables in `config/local.js` and this file is in the `.gitignore` so it will not be hosted on Github if your project is public.
