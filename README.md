@@ -36,8 +36,12 @@ We can also change the configuration for automatically adding CSS and JS files f
 
 Sails-linter automatically adds css files from `assets/styles` into html files. This happens automatically. It loads them inside <!--STYLES --> comment. It does similar automatic linking for JS files. These files are imported based on their name.
 
+### Generating blueprint apis
+
 You can generate different api end points using 
 `sails generate api video`
+
+Sails uses localStorageDb to store the blueprint api data. These are stored in memory in `.tmp` folder.
 
 This process creates `controllers/VideoController.js` and `models/Video.js` model in `api` directory. These are empty at the moment. This also exposes various default routes for CRUD operations.
 
@@ -62,3 +66,11 @@ Get a list of videos using :
 Working with $http service of AngularJS is fine, but Sails provides even more real-time service socket.io. This updates the page even when some other user adds a videos. It is like a subscription to the page that will be updated real-time.
 
 When we use `return` in the callback stack, it returns the control back to the Sails.js. Socket.io provides similar functions like get, post, put, delete. However, it takes callback function.
+
+### Boostrapping Your app
+
+You can use `config/bootstrap.js` to bootstrap the code on the first run. For example, to load initial data that will invite new users. It works in sequence:
+
+1. Loads models and adapters
+2. Run bootstrap.js file.
+3. continue lifting sails

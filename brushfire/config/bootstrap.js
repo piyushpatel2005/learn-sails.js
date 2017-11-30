@@ -13,5 +13,18 @@ module.exports.bootstrap = function(cb) {
 
   // It's very important to trigger this callback method when you are finished
   // with the bootstrap!  (otherwise your server will never lift, since it's waiting on the bootstrap)
-  cb();
+  
+  Video.count().exec(function(err, numVideos) {
+    if(err) {
+      return cb(err);
+    }
+    if(numVideos > 0) {
+      console.log('Number of videos: ', numVideos);
+      return cb();
+    }
+
+    console.log('There are no videos.');
+    return cb();
+  });
+  // cb();
 };
