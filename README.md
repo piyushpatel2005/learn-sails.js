@@ -58,3 +58,7 @@ Get a list of videos using :
 `http://localhost:1337/video/find`
 
 - Sails.js takes care of creating unique id for various types of Databases. It also adds createdAt and updatedAt fields.
+
+Working with $http service of AngularJS is fine, but Sails provides even more real-time service socket.io. This updates the page even when some other user adds a videos. It is like a subscription to the page that will be updated real-time.
+
+When we use `return` in the callback stack, it returns the control back to the Sails.js. Socket.io provides similar functions like get, post, put, delete. However, it takes callback function.
