@@ -35,3 +35,26 @@ Sails uses Grunt to build files and copies all the assets to `.tmp/public` direc
 We can also change the configuration for automatically adding CSS and JS files from Grunt task configuration in `tasks/pipeline.js` file.
 
 Sails-linter automatically adds css files from `assets/styles` into html files. This happens automatically. It loads them inside <!--STYLES --> comment. It does similar automatic linking for JS files. These files are imported based on their name.
+
+You can generate different api end points using 
+`sails generate api video`
+
+This process creates `controllers/VideoController.js` and `models/Video.js` model in `api` directory. These are empty at the moment. This also exposes various default routes for CRUD operations.
+
+/video/find     - find all videos
+/video/find/:id     - find a video with given id
+/video/create       - create video given as query param
+/video/update/:id       - update a video with given id
+/video/destroy/:id      - delete a video with given id
+
+All these routes are GET method routes so that they can be tested using browser.
+
+You can create a video using:
+
+`http://localhost:1337/video/create?title=hi&album=hello&name=Piyush`
+
+Get a list of videos using :
+
+`http://localhost:1337/video/find`
+
+- Sails.js takes care of creating unique id for various types of Databases. It also adds createdAt and updatedAt fields.

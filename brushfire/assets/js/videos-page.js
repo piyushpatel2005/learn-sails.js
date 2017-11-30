@@ -7,24 +7,25 @@
     });
 
     angular.module('brushfire_videosPage')
-    .controller('PageCtrl', ['$scope', '$timeout', function($scope, $timeout) {
+    .controller('PageCtrl', ['$scope', '$http', function($scope, $http) {
         $scope.videosLoading = true;
 
-        $timeout (function afterRetrievingVideos() {
-            var videos = [{
-                title: 'FUNNY BABY VIDEOS',
-                src: 'https://www.youtube.com/embed/_FvTVWjLiHM'
-            }, {
-                title: 'Justin Bieber - Baby ft. Ludacris',
-                src: 'https://www.youtube.com/embed/kffacxfA7G4'
-            }, {
-                title: 'Charlie bit my finger - again !',
-                src: 'https://www.youtube.com/embed/_OBlgSz8sSM'
-            }];
+        $scope.submitVideosError = false;
 
+        $http.get('/video')
+        .then(function onSuccess(response) {
+            $scope.videos = response.data;
+        })
+        .catch(function onError(response) {
+            if(response.data.status === '404') {
+                return;
+            }
+            console.log('An unexpected error occurred: ' + response.data.statusText);
+        })
+        .finally (function completed() {
             $scope.videosLoading = false;
-            $scope.videos = videos;
-        }, 750);
+        });
+
 
         $scope.submitNewVideo = function () {
             if($scope.busySubmittingVideo) {
@@ -45,12 +46,21 @@
 
             $scope.busySubmittingVideo = true;
 
-            $timeout(function () {
+            $http.post('/video', {
+                title: _newVideo.title,
+                src: _newVideo.src
+            })
+            .then(function onSuccess(response){
                 $scope.videos.unshift(_newVideo);
+            })
+            .catch(function onError(response) {
+                console.log('An unexpected error occcured. ' + response.data.statusText);
+            })
+            .finally(function onCompletion() {
                 $scope.busySubmittingVideo = false;
-                $scope.newVideoTitle = '';
                 $scope.newVideoSrc = '';
-            }, 750);
-        }
+                $scope.newVideoTitle = '';
+            });
+        };
     }]);
 })();
